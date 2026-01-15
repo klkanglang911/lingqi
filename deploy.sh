@@ -160,8 +160,23 @@ cleanup_images() {
 build_and_start() {
     log_info "构建新镜像并启动服务..."
 
-    # 使用 docker-compose 构建并启动
-    docker-compose -f "$COMPOSE_FILE" up -d --build || error_exit "服务启动失败"
+    # 显示当前系统资源
+    log_info "当前系统资源状态："
+    free -h | grep -E "Mem|Swap" || true
+    echo ""
+
+    # 串行构建镜像（避免内存峰值）
+    log_info "步骤 1/3: 构建后端镜像..."
+    docker-compose -f "$COMPOSE_FILE" build server || error_exit "后端镜像构建失败"
+    log_success "后端镜像构建完成"
+
+    log_info "步骤 2/3: 构建前端镜像..."
+    docker-compose -f "$COMPOSE_FILE" build frontend || error_exit "前端镜像构建失败"
+    log_success "前端镜像构建完成"
+
+    # 启动服务
+    log_info "步骤 3/3: 启动所有服务..."
+    docker-compose -f "$COMPOSE_FILE" up -d || error_exit "服务启动失败"
 
     log_success "服务启动成功"
 }
