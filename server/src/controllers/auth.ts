@@ -3,6 +3,7 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import type { StringValue } from 'ms';
 import { PrismaClient } from '@prisma/client';
 import { config } from '../config/index.js';
 
@@ -35,7 +36,7 @@ export const register = async (req: Request, res: Response) => {
     const token = jwt.sign(
       { userId: user.id, username: user.username },
       config.jwtSecret,
-      { expiresIn: config.jwtExpiresIn }
+      { expiresIn: config.jwtExpiresIn as StringValue }
     );
 
     res.status(201).json({
@@ -69,7 +70,7 @@ export const login = async (req: Request, res: Response) => {
     const token = jwt.sign(
       { userId: user.id, username: user.username },
       config.jwtSecret,
-      { expiresIn: config.jwtExpiresIn }
+      { expiresIn: config.jwtExpiresIn as StringValue }
     );
 
     res.json({
