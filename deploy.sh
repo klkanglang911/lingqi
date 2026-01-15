@@ -13,7 +13,7 @@ echo "=========================================="
 PROJECT_DIR="/opt/lingqi"
 CONTAINER_NAME="lingqi-app"
 IMAGE_NAME="lingqi-frontend"
-PORT="3000"
+PORT="4000"
 
 # 检查是否在正确的目录
 if [ ! -d "$PROJECT_DIR" ]; then
