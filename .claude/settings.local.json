@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir:*)",
+      "Bash(tree:*)",
+      "Bash(npm install:*)",
+      "Bash(npx prisma generate:*)",
+      "Bash(npx prisma db push:*)",
+      "Bash(npm run db:seed:*)",
+      "Bash(npm run dev:*)",
+      "Bash(timeout:*)",
+      "Bash(curl:*)",
+      "Bash(powershell -Command \"Start-Sleep -Seconds 3; Invoke-RestMethod -Uri ''http://localhost:3001/api/health''\")",
+      "Bash(powershell -Command \"Invoke-RestMethod -Uri ''http://localhost:3001/api/hexagrams'' | ConvertTo-Json -Depth 5\")",
+      "Bash(powershell -Command \"[Console]::OutputEncoding = [System.Text.Encoding]::UTF8; \\(Invoke-WebRequest -Uri ''http://localhost:3001/api/articles''\\).Content\")",
+      "Bash(powershell:*)",
+      "mcp__Playwright__browser_navigate",
+      "mcp__Playwright__browser_take_screenshot",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "mcp__Playwright__browser_click",
+      "mcp__Playwright__browser_snapshot",
+      "mcp__Playwright__browser_console_messages",
+      "Bash(ping:*)",
+      "mcp__Playwright__browser_run_code",
+      "mcp__context7__resolve-library-id",
+      "mcp__exa__web_search_exa",
+      "WebSearch",
+      "WebFetch(domain:zh.wikisource.org)",
+      "WebFetch(domain:ctext.org)",
+      "Bash(npx tsc:*)",
+      "WebFetch(domain:lingqijing.hao86.com)",
+      "WebFetch(domain:www.360doc.com)",
+      "mcp__Playwright__browser_close",
+      "WebFetch(domain:lingqijingm.hao86.com)",
+      "Bash(git init:*)",
+      "Bash(chmod:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  # 前端服务
+  frontend:
+    build: .
+    ports:
+      - "80:80"
+    depends_on:
+      - server
+
+  # 后端服务
+  server:
+    build: ./server
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=file:/app/data/prod.db
+      - JWT_SECRET=${JWT_SECRET:-change-this-secret}
+    volumes:
+      - server-data:/app/data
+
+volumes:
+  server-data:

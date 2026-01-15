@@ -1,0 +1,79 @@
+// Prisma Schema - 灵棋经数据库模型
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// 用户表
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  nickname  String   @default("问道者")
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  divinations Divination[]
+  favorites   Favorite[]
+}
+
+// 卦象表
+model Hexagram {
+  id          String  @id
+  number      String  // 第几卦
+  name        String  // 卦名
+  nature      String  // 性质（上吉、中吉等）
+  subTitle    String  // 副标题
+  description String  // 卦辞
+  xiang       String? // 象曰
+  poem        String  // 诗句
+
+  // 指引（JSON存储）
+  guidance    String  // JSON: {wealth, health, travel, love}
+
+  divinations Divination[]
+  favorites   Favorite[]
+}
+
+// 占卜记录表
+model Divination {
+  id        String   @id @default(cuid())
+  userId    String
+  hexagramId String
+  queryType String?  // 问卜类型
+  question  String?  // 所问问题
+  aiReading String?  // AI解读
+  createdAt DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  hexagram Hexagram @relation(fields: [hexagramId], references: [id])
+}
+
+// 收藏表
+model Favorite {
+  id         String   @id @default(cuid())
+  userId     String
+  hexagramId String
+  createdAt  DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  hexagram Hexagram @relation(fields: [hexagramId], references: [id])
+
+  @@unique([userId, hexagramId])
+}
+
+// 文章表
+model Article {
+  id       String @id
+  title    String
+  subtitle String
+  category String
+  image    String
+  content  String
+}
