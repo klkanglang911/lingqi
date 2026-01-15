@@ -1,25 +1,75 @@
+# ==============================
+# 灵棋经占卜应用 - Docker Compose 配置
+# ==============================
 version: '3.8'
 
 services:
   # 前端服务
   frontend:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        # 从环境变量或 .env 文件读取
+        GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    container_name: lingqi-frontend
     ports:
-      - "80:80"
+      - "${FRONTEND_PORT:-4000}:80"
     depends_on:
-      - server
+      server:
+        condition: service_healthy
+    networks:
+      - lingqi-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   # 后端服务
   server:
-    build: ./server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: lingqi-server
     ports:
-      - "3001:3001"
+      - "${SERVER_PORT:-3001}:3001"
     environment:
       - NODE_ENV=production
       - DATABASE_URL=file:/app/data/prod.db
-      - JWT_SECRET=${JWT_SECRET:-change-this-secret}
+      - JWT_SECRET=${JWT_SECRET:-please-change-this-secret-in-production}
+      - PORT=3001
     volumes:
+      # 持久化数据库文件
       - server-data:/app/data
+    networks:
+      - lingqi-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 15s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
+# 网络配置
+networks:
+  lingqi-network:
+    driver: bridge
+
+# 数据卷配置
 volumes:
   server-data:
+    driver: local

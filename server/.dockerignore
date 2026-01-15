@@ -1,0 +1,35 @@
+# 依赖目录
+node_modules
+npm-debug.log*
+yarn-debug.log*
+
+# 构建产物
+dist
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+*.swp
+
+# 测试
+coverage
+
+# 环境变量（应在部署时注入）
+.env
+.env.local
+.env.*.local
+
+# 文档
+README.md
+*.md
+
+# 数据库（生产环境应使用 volume）
+prisma/*.db
+prisma/*.db-journal
+
+# 其他
+.DS_Store
