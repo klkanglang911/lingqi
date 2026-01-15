@@ -13,8 +13,8 @@ ENV GEMINI_API_KEY=$GEMINI_API_KEY
 # 复制依赖配置文件
 COPY package*.json ./
 
-# 安装依赖（使用 npm ci 提高构建速度和稳定性）
-RUN npm ci --only=production && \
+# 安装所有依赖（包括 devDependencies，构建时需要 vite）
+RUN npm ci && \
     npm cache clean --force
 
 # 复制源代码

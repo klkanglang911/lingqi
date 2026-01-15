@@ -26,8 +26,11 @@ WORKDIR /app
 # 安装 OpenSSL（Prisma 需要）
 RUN apk add --no-cache openssl
 
-# 复制依赖
+# 复制依赖配置文件
 COPY package*.json ./
+COPY prisma ./prisma/
+
+# 安装所有依赖（包括 devDependencies，构建时需要 typescript）
 RUN npm ci
 
 # 复制源代码
