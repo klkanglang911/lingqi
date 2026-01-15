@@ -133,7 +133,6 @@ check_env_file() {
     if [ ! -f "$PROJECT_DIR/$ENV_FILE" ]; then
         log_warning "未找到 .env 文件，将使用默认配置"
         log_warning "建议创建 .env 文件并配置以下变量："
-        echo "  - GEMINI_API_KEY"
         echo "  - JWT_SECRET"
         echo "  - FRONTEND_PORT"
         echo "  - SERVER_PORT"

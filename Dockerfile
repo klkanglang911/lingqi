@@ -6,10 +6,6 @@ FROM node:18-alpine AS builder
 # 设置工作目录
 WORKDIR /app
 
-# 定义构建参数（用于注入环境变量）
-ARG GEMINI_API_KEY
-ENV GEMINI_API_KEY=$GEMINI_API_KEY
-
 # 复制依赖配置文件
 COPY package*.json ./
 

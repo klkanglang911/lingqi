@@ -9,9 +9,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        # 从环境变量或 .env 文件读取
-        GEMINI_API_KEY: ${GEMINI_API_KEY:-}
     container_name: lingqi-frontend
     ports:
       - "${FRONTEND_PORT:-4000}:80"

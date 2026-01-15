@@ -164,9 +164,6 @@ nano .env
 
 **重要配置项**：
 ```env
-# Gemini API 密钥（必填）
-GEMINI_API_KEY=your_actual_api_key
-
 # JWT 密钥（生产环境必须修改）
 JWT_SECRET=$(openssl rand -base64 32)
 
@@ -217,20 +214,11 @@ curl http://localhost:3001/health
 
 | 变量名 | 说明 | 默认值 | 必填 |
 |--------|------|--------|------|
-| `GEMINI_API_KEY` | Google Gemini API 密钥 | - | ✅ |
 | `JWT_SECRET` | JWT 签名密钥 | 默认值（不安全） | ✅ |
 | `FRONTEND_PORT` | 前端服务端口 | 4000 | ❌ |
 | `SERVER_PORT` | 后端服务端口 | 3001 | ❌ |
 | `NODE_ENV` | 运行环境 | production | ❌ |
 | `DATABASE_URL` | 数据库连接 | file:/app/data/prod.db | ❌ |
-
-### 获取 Gemini API 密钥
-
-1. 访问 [Google AI Studio](https://makersuite.google.com/app/apikey)
-2. 登录 Google 账号
-3. 点击 "Get API Key"
-4. 复制生成的 API 密钥
-5. 粘贴到 `.env` 文件中
 
 ### 生成安全的 JWT_SECRET
 

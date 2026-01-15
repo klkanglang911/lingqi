@@ -1,44 +1,9 @@
 // 数据库种子文件 - 初始化卦象和文章数据
 
 import { PrismaClient } from '@prisma/client';
+import { hexagramSeedData } from './hexagram-seed-data.js';
 
 const prisma = new PrismaClient();
-
-// 卦象数据
-const hexagrams = [
-  {
-    id: '12',
-    number: '第十二卦',
-    name: '大安卦',
-    nature: '上吉',
-    subTitle: '万事大吉',
-    description: '身不动，无磨难。事事安稳，静待时机。平安即是福，宜静不宜动。',
-    xiang: '风吹杨柳，而且安稳。君子以居安思危。',
-    poem: '日新其德，是为大宝。',
-    guidance: JSON.stringify({
-      wealth: '积蓄力量，时机成熟。适合储蓄和长期投资，不宜铺张浪费。耐心等待将有丰厚回报。',
-      health: '注意修养生息。内在调理和呼吸吐纳最为有益。避免过度劳累，保持精力充沛。',
-      travel: '可能会有短暂延误，但这正是准备的好时机。出发前做足功课，目的地值得等待。',
-      love: '稳固的情感纽带正在形成。共同的价值观和相互尊重是基础。多花时间深入了解彼此。'
-    })
-  },
-  {
-    id: '26',
-    number: '第二十六卦',
-    name: '大畜卦',
-    nature: '上吉',
-    subTitle: '山天大畜',
-    description: '大畜：利贞。不家食，吉。利涉大川。',
-    xiang: '天在山中，大畜；君子以多识前言往行，以畜其德。',
-    poem: '日新其德，是为大宝。',
-    guidance: JSON.stringify({
-      wealth: '积蓄力量，时机成熟。适合储蓄和长期投资。',
-      health: '注意修养生息。',
-      travel: '利涉大川，出行顺利。',
-      love: '情感深厚，积淀良缘。'
-    })
-  }
-];
 
 // 文章数据
 const articles = [
@@ -85,17 +50,18 @@ async function main() {
   await prisma.hexagram.deleteMany();
   await prisma.article.deleteMany();
 
-  // 插入卦象数据
-  for (const hex of hexagrams) {
+  // 插入卦象数据（完整的125卦）
+  console.log(`准备插入 ${hexagramSeedData.length} 个卦象...`);
+  for (const hex of hexagramSeedData) {
     await prisma.hexagram.create({ data: hex });
   }
-  console.log(`已插入 ${hexagrams.length} 个卦象`);
+  console.log(`✓ 已插入 ${hexagramSeedData.length} 个卦象`);
 
   // 插入文章数据
   for (const article of articles) {
     await prisma.article.create({ data: article });
   }
-  console.log(`已插入 ${articles.length} 篇文章`);
+  console.log(`✓ 已插入 ${articles.length} 篇文章`);
 
   console.log('数据库初始化完成！');
 }
