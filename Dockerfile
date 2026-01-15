@@ -41,9 +41,6 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 RUN chown -R nginx:nginx /usr/share/nginx/html && \
     chmod -R 755 /usr/share/nginx/html
 
-# 切换到非 root 用户（提高安全性）
-USER nginx
-
 # 暴露端口
 EXPOSE 80
 
